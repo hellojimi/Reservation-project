@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-public class User {
+@Entity(name = "USER")
+public class UserEntity {
 
     @Id
     @Column(name = "user_id")

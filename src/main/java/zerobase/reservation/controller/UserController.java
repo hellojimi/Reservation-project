@@ -4,11 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import zerobase.reservation.domain.User;
+import org.springframework.web.bind.annotation.*;
+import zerobase.reservation.domain.UserEntity;
 import zerobase.reservation.dto.RegisterUser;
 import zerobase.reservation.service.UserService;
 
@@ -22,11 +19,20 @@ public class UserController {
 
     // 회원가입
     @PostMapping("/join")
-    public ResponseEntity<?> register(@RequestBody RegisterUser parameter,HttpServletRequest request) {
-        log.info(parameter.getUserId());
+    public ResponseEntity<?> register(
+            @RequestBody RegisterUser parameter,
+            HttpServletRequest request
+    ) {
+        UserEntity userEntity = userService.register(parameter, request.getRequestURI());
 
-        User user = userService.register(parameter, request.getRequestURI());
+        return ResponseEntity.ok(userEntity);
+    }
 
-        return ResponseEntity.ok(user);
+    @GetMapping("/email-auth")
+    public ResponseEntity<?> emailAuth(@RequestParam("id") String uuid) {
+        UserEntity emailAuth = userService.emailAuth(uuid);
+        log.info("valid email auth -> " + emailAuth.getId());
+
+        return ResponseEntity.ok("이메일 인증 완료");
     }
 }

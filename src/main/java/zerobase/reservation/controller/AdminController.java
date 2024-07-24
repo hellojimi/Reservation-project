@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import zerobase.reservation.domain.User;
+import zerobase.reservation.domain.UserEntity;
 import zerobase.reservation.dto.RegisterUser;
 import zerobase.reservation.service.UserService;
 
@@ -24,7 +24,7 @@ public class AdminController {
     public ResponseEntity<?> register(@RequestBody RegisterUser parameter, HttpServletRequest request) {
         log.info(parameter.getUserId());
 
-        User admin = userService.register(parameter, request.getRequestURI());
+        UserEntity admin = userService.register(parameter, request.getRequestURI());
 
         return ResponseEntity.ok(admin);
     }

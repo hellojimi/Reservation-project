@@ -1,7 +1,12 @@
 package zerobase.reservation.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import zerobase.reservation.domain.User;
+import zerobase.reservation.domain.UserEntity;
 
-public interface UserRepository extends JpaRepository<User, String> {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<UserEntity, String> {
+
+    Optional<UserEntity> findByEmailAuthKey(String emailAuthKey);
+
 }

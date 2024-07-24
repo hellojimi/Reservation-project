@@ -1,4 +1,4 @@
-package zerobase.reservation.security;
+package zerobase.reservation.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
