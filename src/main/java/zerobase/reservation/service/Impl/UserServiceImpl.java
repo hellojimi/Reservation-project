@@ -6,7 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import zerobase.reservation.config.mail.MailComponents;
 import zerobase.reservation.domain.UserEntity;
-import zerobase.reservation.dto.RegisterUser;
+import zerobase.reservation.dto.Auth;
 import zerobase.reservation.exception.UserException;
 import zerobase.reservation.repository.UserRepository;
 import zerobase.reservation.service.UserService;
@@ -27,12 +27,12 @@ public class UserServiceImpl implements UserService {
     private final MailComponents mailComponents;
 
     @Override
-    public UserEntity register(RegisterUser registerUser, String requestURI) {
+    public UserEntity register(Auth.join registerUser, String requestURI) {
 
         validateDuplicateUser(registerUser);
 
         UserAuth role = UserAuth.USER;
-        if ("/admin/join".equals(requestURI)) {
+        if ("/account/admin-join".equals(requestURI)) {
             role = UserAuth.OWNER;
         }
 
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
         );
 
         // 이메일 발송
-        boolean resultSendMail = sendMailToUser(registerUser, uuid);
+        boolean resultSendMail = sendMailToUser(registerUser.getUserId(), uuid);
         if (!resultSendMail) {
             throw new UserException(ErrorCode.FAILED_SEND_MAIL);
         }
@@ -74,15 +74,27 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
-    private void validateDuplicateUser(RegisterUser registerUser) {
+    //로그인
+    @Override
+    public UserEntity authenticate(Auth.login login) {
+        UserEntity user = userRepository.findById(login.getId())
+                .orElseThrow(() -> new UserException(ErrorCode.NOT_FOUND_USER));
+
+        if (!passwordEncoder.matches(login.getPassword(), user.getPassword())) {
+            throw new UserException(ErrorCode.UN_MATCHED_PASSWORD);
+        }
+
+        return user;
+    }
+
+    private void validateDuplicateUser(Auth.join registerUser) {
         boolean exists = userRepository.existsById(registerUser.getUserId());
         if (exists) {
             throw new UserException(ErrorCode.DUPLICATE_USER);
         }
     }
 
-    private boolean sendMailToUser(RegisterUser registerUser, String uuid) {
-        String email = registerUser.getUserId();
+    private boolean sendMailToUser(String toEmail, String uuid) {
         String subject = " 가입을 축하드립니다. ";
         String text =
                 "<p>가입을 축하드립니다.</p>" +
@@ -91,7 +103,7 @@ public class UserServiceImpl implements UserService {
                     "<a target='_blank' href='http://localhost:8080/user/email-auth?id=" + uuid + "'>이메일 인증</a>" +
                 "</div>";
 
-        return mailComponents.sendMail(email, subject, text);
+        return mailComponents.sendMail(toEmail, subject, text);
     }
 
     @Override
