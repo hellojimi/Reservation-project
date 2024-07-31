@@ -5,7 +5,7 @@ import zerobase.reservation.domain.UserEntity;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<UserEntity, String> {
+public interface AccountRepository extends JpaRepository<UserEntity, String> {
 
     Optional<UserEntity> findByEmailAuthKey(String emailAuthKey);
 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>매장 목록</title>
+</head>
+<body>
+    <h1>매장 목록</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>상호명</th>
+                <th>주소</th>
+                <th>전화번호</th>
+                <th>오픈 시간</th>
+                <th>라스트 오더</th>
+                <th>매장 소개</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${restaurantEntities}==null">
+                <td colspan="6" th:text="${'등록된 매장이 없습니다.'}"></td>
+            </tr>
+            <tr th:unless="${restaurantEntities}==null" th:each="restaurant : ${restaurantEntities}">
+                <td th:text="${restaurant.name}"></td>
+                <td th:text="${restaurant.address}"></td>
+                <td th:text="${restaurant.phone}"></td>
+                <td th:text="${restaurant.openTime}"></td>
+                <td th:text="${restaurant.lastOrderTime}"></td>
+                <td th:text="${restaurant.contents}"></td>
+                <td>
+                    <a th:href="@{update(id=${restaurant.id})}">수정</a> |
+                    <a th:href="@{delete(id=${restaurant.id})}">삭제</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <a th:href="@{/account/dashboard}">홈으로</a>
+    </div>
+</body>
+</html>
