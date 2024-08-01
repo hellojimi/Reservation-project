@@ -74,6 +74,12 @@ public class AccountServiceImpl implements AccountService {
         return userEntity;
     }
 
+    @Override
+    public UserEntity getAccountInfo(String accountId) {
+        return accountRepository.findById(accountId)
+                .orElseThrow(() -> new UserException(ErrorCode.NOT_FOUND_USER));
+    }
+
     private void validateDuplicateUser(Auth.join registerUser) {
         boolean exists = accountRepository.existsById(registerUser.getUserId());
         if (exists) {

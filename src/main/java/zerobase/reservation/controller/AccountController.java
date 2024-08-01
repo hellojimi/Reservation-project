@@ -69,8 +69,7 @@ public class AccountController {
     @RequestMapping("/dashboard")
     public String dashboard(@AuthenticationPrincipal User user, Model model) {
         //AuthenticationPrincipal 유저 정보 가져오기
-        model.addAttribute("loginId", user.getUsername());
-        model.addAttribute("loginRoles", user.getAuthorities());
+        model.addAttribute("user", user);
 
         return "account/dashboard";
     }

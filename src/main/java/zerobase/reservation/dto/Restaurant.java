@@ -35,6 +35,7 @@ public class Restaurant {
         entity.setOpenTime(restaurant.getOpenTime());
         entity.setLastOrderTime(restaurant.getLastOrderTime());
         entity.setContents(restaurant.getContents());
+        entity.setUdtDt(LocalDateTime.now());
 
         return entity;
     }

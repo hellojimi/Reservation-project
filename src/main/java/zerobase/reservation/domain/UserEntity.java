@@ -17,7 +17,7 @@ public class UserEntity {
 
     @Id
     @Column(name = "account_id")
-    private String id;
+    private String id;                  // 이메일
 
     private String name;                // 이름
     private String phone;               // 전화번호

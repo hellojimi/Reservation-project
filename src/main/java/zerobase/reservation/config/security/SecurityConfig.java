@@ -29,6 +29,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) ->
                         auth
                                 .requestMatchers(
+                                        "/account/dashboard",
                                         "/account/customer-join",
                                         "/account/manager-join",
                                         "/account/email-auth").permitAll()

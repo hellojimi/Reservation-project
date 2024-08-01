@@ -44,7 +44,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantRepository.findAll();
     }
 
-    @Override // findAllById
+    @Override
     public RestaurantEntity findRestaurant(Long restaurantId) {
         return restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new UserException(ErrorCode.NOT_FOUND_RESTAURANT));
@@ -52,10 +52,9 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public RestaurantEntity update(Long restaurantId, Restaurant restaurant) {
-        RestaurantEntity result = restaurantRepository.findById(restaurantId)
-                .orElseThrow(() -> new UserException(ErrorCode.NOT_FOUND_RESTAURANT));
-
+        RestaurantEntity result = findRestaurant(restaurantId);
         restaurantRepository.save(Restaurant.updateOf(result, restaurant));
+
         return result;
     }
 

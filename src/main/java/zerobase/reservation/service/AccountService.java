@@ -10,4 +10,7 @@ public interface AccountService {
     // uuid로 이메일 인증 확인
     UserEntity emailAuth(String uuid);
 
+    // 계정 id로 정보 찾기
+    UserEntity getAccountInfo(String accountId);
+
 }
