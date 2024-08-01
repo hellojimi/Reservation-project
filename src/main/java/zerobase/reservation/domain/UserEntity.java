@@ -11,16 +11,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-public class User {
+@ToString
+@Entity(name = "ACCOUNT")
+public class UserEntity {
 
     @Id
-    @Column(name = "user_id")
-    private String id;
+    @Column(name = "account_id")
+    private String id;                  // 이메일
 
-    private String name;
-    private String phone;
-    private String password;
+    private String name;                // 이름
+    private String phone;               // 전화번호
+    private String password;            // 비밀번호
 
     @Enumerated(EnumType.STRING)
     private UserAuth userType;          // 회원타입

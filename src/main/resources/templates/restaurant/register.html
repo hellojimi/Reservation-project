@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>매장 등록</title>
+</head>
+<body>
+    <h1>매장 등록하기</h1>
+    <form method="post">
+        <p>
+            <label>상호명</label>
+            <input type="text" id="name" name="name" placeholder="상호명" required="" autofocus="">
+        </p>
+        <p>
+            <label>주소</label>
+            <input type="text" id="address" name="address" placeholder="주소" required="">
+        </p>
+        <p>
+            <label>전화번호</label>
+            <input type="tel" id="phone" name="phone" placeholder="전화번호" required="">
+        </p>
+        <p>
+            <label>오픈 시간</label>
+            <input type="text" id="openTime" name="openTime" placeholder="오픈 시간" required="">
+        </p>
+        <p>
+            <label>라스트 오더</label>
+            <input type="text" id="lastOrderTime" name="lastOrderTime" placeholder="라스트 오더" required="">
+        </p>
+        <p>
+            <label>매장 소개</label>
+            <input type="text" id="contents" name="contents" placeholder="상세내용" required="">
+        </p>
+        <button type="submit">등록하기</button>
+    </form>
+
+    <div>
+        <a th:href="@{/account/dashboard}">홈으로</a>
+    </div>
+</body>
+</html>

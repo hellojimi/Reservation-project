@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>매장 등록</title>
+</head>
+<body>
+    <h1>매장 등록하기</h1>
+    <div th:if="${not #strings.isEmpty(restaurantData)}">
+        <p>매장 등록이 완료되었습니다.</p>
+    </div>
+    <div th:if="${#strings.isEmpty(restaurantData)}">
+        <p>매장 등록을 실패하였습니다.</p>
+    </div>
+
+    <a th:href="@{/account/dashboard}">홈으로</a>
+</body>
+</html>

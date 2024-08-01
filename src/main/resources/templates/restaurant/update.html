@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>매장 수정</title>
+</head>
+<body>
+<h1>매장 수정</h1>
+<form method="post">
+    <p>
+        <label>상호명</label>
+        <input type="text" th:value="${restaurant.name}" id="name" name="name" required="">
+    </p>
+    <p>
+        <label>주소</label>
+        <input type="text" th:value="${restaurant.address}" id="address" name="address" required="">
+    </p>
+    <p>
+        <label>전화번호</label>
+        <input type="tel" th:value="${restaurant.phone}" id="phone" name="phone" placeholder="전화번호" required="">
+    </p>
+    <p>
+        <label>오픈 시간</label>
+        <input type="text" th:value="${restaurant.openTime}" id="openTime" name="openTime" placeholder="오픈 시간" required="">
+    </p>
+    <p>
+        <label>라스트 오더</label>
+        <input type="text" th:value="${restaurant.lastOrderTime}" id="lastOrderTime" name="lastOrderTime" placeholder="라스트 오더" required="">
+    </p>
+    <p>
+        <label>상세내용</label>
+        <input type="text" th:value="${restaurant.contents}" id="contents" name="contents" placeholder="상세내용" required="">
+    </p>
+    <button type="submit">수정하기</button>
+</form>
+
+<div>
+    <a th:href="@{/account/dashboard}">홈으로</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>매장</title>
+</head>
+<body>
+    <h1>매장 목록</h1>
+    <div th:each="restaurant : ${restaurantEntities}">
+        <div>
+            <h4>
+                <a th:href="@{details(id=${restaurant.id})}" th:text="${restaurant.name}"></a>
+            </h4>
+            <p th:text="${restaurant.contents}"></p>
+        </div>
+        <div>
+            <!--별점-->
+        </div>
+        <div>
+            <a th:href="@{reservation/waiting(id=${restaurant.id})}">웨이팅 등록하기</a>
+        </div>
+    </div>
+
+    <div>
+        <a th:href="@{/account/dashboard}">홈으로</a>
+    </div>
+</body>
+</html>
