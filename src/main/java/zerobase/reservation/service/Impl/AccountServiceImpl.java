@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import zerobase.reservation.config.mail.MailComponents;
-import zerobase.reservation.domain.UserEntity;
+import zerobase.reservation.domain.AccountEntity;
 import zerobase.reservation.dto.Auth;
 import zerobase.reservation.exception.Status;
 import zerobase.reservation.repository.AccountRepository;
@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
     private final MailComponents mailComponents;
 
     @Override
-    public UserEntity register(Auth.join registerUser, String requestURI) {
+    public AccountEntity register(Auth.join registerUser, String requestURI) {
 
         // 회원 중복 확인
         validateDuplicateUser(registerUser);
@@ -38,8 +38,8 @@ public class AccountServiceImpl implements AccountService {
 
         String uuid = UUID.randomUUID().toString();
 
-        UserEntity result = accountRepository.save(
-                UserEntity.builder()
+        AccountEntity result = accountRepository.save(
+                AccountEntity.builder()
                         .id(registerUser.getUserId())
                         .name(registerUser.getName())
                         .phone(registerUser.getPhone())
@@ -64,20 +64,20 @@ public class AccountServiceImpl implements AccountService {
 
     // 이메일 인증 확인
     @Override
-    public UserEntity emailAuth(String uuid) {
-        UserEntity userEntity = accountRepository.findByEmailAuthKey(uuid)
+    public AccountEntity emailAuth(String uuid) {
+        AccountEntity accountEntity = accountRepository.findByEmailAuthKey(uuid)
                 .orElseThrow(() -> new Status(ErrorCode.UNKNOWN_AUTH_KEY));
 
-        userEntity.setEmailAuthYn(true);
-        userEntity.setEmailAuthDt(LocalDateTime.now());
-        accountRepository.save(userEntity);
+        accountEntity.setEmailAuthYn(true);
+        accountEntity.setEmailAuthDt(LocalDateTime.now());
+        accountRepository.save(accountEntity);
 
-        return userEntity;
+        return accountEntity;
     }
 
     // 회원 정보 찾기
     @Override
-    public UserEntity getAccountInfo(String accountId) {
+    public AccountEntity getAccountInfo(String accountId) {
         return accountRepository.findById(accountId)
                 .orElseThrow(() -> new Status(ErrorCode.NOT_FOUND_USER));
     }

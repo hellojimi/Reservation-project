@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import zerobase.reservation.domain.ReservationEntity;
 import zerobase.reservation.domain.RestaurantEntity;
-import zerobase.reservation.domain.UserEntity;
+import zerobase.reservation.domain.AccountEntity;
 import zerobase.reservation.dto.ReservationList;
 import zerobase.reservation.dto.Reservation;
 import zerobase.reservation.exception.Status;
@@ -46,7 +46,7 @@ public class ReservationController {
             throw new Status(ErrorCode.REQUIRED_LOGIN);
         }
 
-        UserEntity accountInfo = accountService.getAccountInfo(user.getUsername());
+        AccountEntity accountInfo = accountService.getAccountInfo(user.getUsername());
         RestaurantEntity restaurantInfo = restaurantService.findRestaurant(restaurantId);
 
         model.addAttribute("accountInfo", accountInfo);
@@ -69,7 +69,7 @@ public class ReservationController {
             throw new Status(ErrorCode.FAILED_REGISTER_WAITING);
         }
 
-        UserEntity accountInfo = accountService.getAccountInfo(accountId);
+        AccountEntity accountInfo = accountService.getAccountInfo(accountId);
         RestaurantEntity restaurantInfo = restaurantService.findRestaurant(restaurantId);
 
         model.addAttribute("accountInfo", accountInfo);
@@ -140,7 +140,7 @@ public class ReservationController {
         ReservationEntity reservation
                 = reservationService.checkReservationUsingKiosk(restaurantId, phone);
 
-        UserEntity accountInfo = accountService.getAccountInfo(reservation.getCustomerId());
+        AccountEntity accountInfo = accountService.getAccountInfo(reservation.getCustomerId());
 
         model.addAttribute("reservation", reservation);
         model.addAttribute("accountInfo", accountInfo);

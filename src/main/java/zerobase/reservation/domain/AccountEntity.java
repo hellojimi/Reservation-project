@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 @Entity(name = "ACCOUNT")
-public class UserEntity {
+public class AccountEntity {
 
     @Id
     @Column(name = "account_id")
