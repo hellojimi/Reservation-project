@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import zerobase.reservation.domain.ReservationEntity;
 import zerobase.reservation.domain.RestaurantEntity;
-import zerobase.reservation.domain.UserEntity;
+import zerobase.reservation.domain.AccountEntity;
 import zerobase.reservation.type.ReservationStatus;
 
 @Data
@@ -24,7 +24,7 @@ public class ReservationList {
 
     public static ReservationList of(
             ReservationEntity reservation,
-            UserEntity account,
+            AccountEntity account,
             RestaurantEntity restaurant
     ) {
         return ReservationList.builder()

@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import zerobase.reservation.domain.ReservationEntity;
 import zerobase.reservation.domain.RestaurantEntity;
-import zerobase.reservation.domain.UserEntity;
+import zerobase.reservation.domain.AccountEntity;
 import zerobase.reservation.dto.Reservation;
 import zerobase.reservation.dto.ReservationList;
 import zerobase.reservation.exception.Status;
@@ -49,7 +49,7 @@ public class ReservationServiceImpl implements ReservationService {
     // 현장 예약 확인
     public ReservationEntity checkReservationUsingKiosk(Long restaurantId, String phone) {
         // 전화번호로 예약자 정보 확인
-        UserEntity reservationPersonInfo = accountRepository.findByPhone(phone)
+        AccountEntity reservationPersonInfo = accountRepository.findByPhone(phone)
                 .orElseThrow(() -> new Status(ErrorCode.NOE_FOUND_RESERVATION_PERSON_INFO));
 
         // 오늘 날짜 예약 내역 확인
@@ -73,7 +73,7 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         // 예약자 상세 정보
-        UserEntity userInfo = accountRepository.findById(accountId)
+        AccountEntity userInfo = accountRepository.findById(accountId)
                 .orElseThrow(() -> new Status(ErrorCode.NOT_FOUND_USER));
 
         List<ReservationList> reservationList = new ArrayList();
@@ -107,7 +107,7 @@ public class ReservationServiceImpl implements ReservationService {
 
             for (ReservationEntity reservation : reservationList) {
                 // 예약자 정보 가져오기
-                UserEntity customerInfo = accountRepository.findById(reservation.getCustomerId())
+                AccountEntity customerInfo = accountRepository.findById(reservation.getCustomerId())
                         .orElseThrow(() -> new Status(ErrorCode.NOT_FOUND_USER));
 
                 result.add(ReservationList.of(reservation, customerInfo, restaurant));

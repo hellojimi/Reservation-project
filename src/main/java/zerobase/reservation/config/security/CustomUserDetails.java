@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import zerobase.reservation.domain.UserEntity;
+import zerobase.reservation.domain.AccountEntity;
 import zerobase.reservation.repository.AccountRepository;
 
 @Service
@@ -20,11 +20,11 @@ public class CustomUserDetails implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("userId -> " + username);
 
-        UserEntity userEntity = accountRepository.findById(username)
+        AccountEntity accountEntity = accountRepository.findById(username)
                 .orElseThrow(() -> new UsernameNotFoundException("존재하지 않는 회원입니다." + username));
 
-        log.info("loadUserByUsername -> " + userEntity.toString());
+        log.info("loadUserByUsername -> " + accountEntity.toString());
 
-        return new UserAdapter(userEntity); // 시큐리티 세션에 유저 정보가 등록됨
+        return new UserAdapter(accountEntity); // 시큐리티 세션에 유저 정보가 등록됨
     }
 }
