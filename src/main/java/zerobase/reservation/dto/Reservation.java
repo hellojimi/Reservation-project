@@ -21,4 +21,26 @@ public class Reservation {
                 .reservationTime(reservation.getReservationTime())
                 .build();
     }
+
+    public static ReservationEntity updateConfirm(ReservationEntity reservation) {
+        ReservationEntity entity = new ReservationEntity();
+        entity.setId(reservation.getId());
+        entity.setCustomerId(reservation.getCustomerId());
+        entity.setReservationStatus(ReservationStatus.CONFIRM);
+        entity.setReservationDate(reservation.getReservationDate());
+        entity.setReservationTime(reservation.getReservationTime());
+
+        return entity;
+    }
+
+    public static ReservationEntity updateCancel(ReservationEntity reservation) {
+        ReservationEntity entity = new ReservationEntity();
+        entity.setId(reservation.getId());
+        entity.setCustomerId(reservation.getCustomerId());
+        entity.setReservationStatus(ReservationStatus.CANCEL);
+        entity.setReservationDate(reservation.getReservationDate());
+        entity.setReservationTime(reservation.getReservationTime());
+
+        return entity;
+    }
 }

@@ -17,4 +17,7 @@ public interface ReservationService {
     List<ReservationList> getMyReservationList(String accountId);
 
     Object getManagerReservationList(String managerId);
+
+    // 예약 승인 여부
+    void getReservationApproveResult(Long reservationId, String status);
 }
