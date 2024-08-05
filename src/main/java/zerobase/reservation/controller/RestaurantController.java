@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import zerobase.reservation.domain.RestaurantEntity;
 import zerobase.reservation.dto.Restaurant;
-import zerobase.reservation.exception.UserException;
+import zerobase.reservation.exception.Status;
 import zerobase.reservation.service.RestaurantService;
 import zerobase.reservation.type.ErrorCode;
 
@@ -28,12 +28,15 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
 
-    // 매장 등록
+    // 매장 검색하기
+
+
+    // 관리자 매장 등록
     @GetMapping("/register")
     @ManagerAuthorize
     public String restaurant(@AuthenticationPrincipal User user) {
         if (user == null) {
-            throw new UserException(ErrorCode.REQUIRED_LOGIN);
+            throw new Status(ErrorCode.REQUIRED_LOGIN);
         }
 
         log.info("관리자 정보: " + user.getUsername());

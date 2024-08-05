@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>예약 확인</title>
+</head>
+<body>
+    <form method="post">
+        <div id="restaurantInfo">
+            <p>
+                <input type="hidden" id="restaurantId" name="restaurantId" th:value="${restaurantInfo.id}">
+            </p>
+        </div>
+
+        <div id="accountInfo">
+            <h3>예약자 정보</h3>
+            <h4>전화번호를 입력해주세요</h4>
+            <p>
+                <label>
+                    <input type="text" id="phone" name="phone" placeholder="ex) 010-0000-0000">
+                </label>
+            </p>
+        </div>
+
+        <div>
+            <button type="submit">예약 확인하기</button>
+        </div>
+    </form>
+</body>
+</html>

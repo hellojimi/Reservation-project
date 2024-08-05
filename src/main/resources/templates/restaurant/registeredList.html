@@ -19,10 +19,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:if="${restaurantEntities}==null">
+            <tr th:if="${restaurantEntities} == null">
                 <td colspan="6" th:text="${'등록된 매장이 없습니다.'}"></td>
             </tr>
-            <tr th:unless="${restaurantEntities}==null" th:each="restaurant : ${restaurantEntities}">
+            <tr th:unless="${restaurantEntities} == null" th:each="restaurant : ${restaurantEntities}">
                 <td th:text="${restaurant.name}"></td>
                 <td th:text="${restaurant.address}"></td>
                 <td th:text="${restaurant.phone}"></td>
@@ -38,7 +38,7 @@
     </table>
 
     <div>
-        <a th:href="@{/account/dashboard}">홈으로</a>
+        <a th:href="@{/}">홈으로</a>
     </div>
 </body>
 </html>

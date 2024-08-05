@@ -13,11 +13,14 @@
 <body>
     <div class="nav">
         <form>
-            <button th:if="${user == null}" class="btn btn-sm btn-danger btn-block" type="submit" id="login_btn">로그인</button>
+            <a th:if="${user == null}" th:href="@{/login}" class="btn btn-sm btn-danger btn-block" id="login_btn">로그인</a>
         </form>
-        <form method="post" action="/account/logout">
-            <button th:unless="${user == null}" class="btn btn-sm btn-danger btn-block" type="submit" id="logout_btn">로그아웃</button>
-        </form>
+        <div th:unless="${user == null}">
+            <form method="post" action="/logout">
+                <button class="btn btn-sm btn-danger btn-block" type="submit" id="logout_btn">로그아웃</button>
+            </form>
+            <a>마이페이지</a>
+        </div>
     </div>
 
     <div class="container">

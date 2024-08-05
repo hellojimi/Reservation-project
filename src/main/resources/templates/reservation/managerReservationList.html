@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>예약 내역</title>
+</head>
+<body>
+    <form method="post" action="/reservation/approve">
+        <table th:if="${result} == null">
+            예약 내역이 존재하지 않습니다.
+        </table>
+        <table th:unless="${result} == null" th:each="list : ${result}">
+            <thead>
+                <tr>
+                    <th>예약자 명</th>
+                    <th>예약자 전화번호</th>
+                    <th>예약자 이메일</th>
+                    <th>예약 일</th>
+                    <th>예약 시간</th>
+                    <th>예약 상태</th>
+                    <th>예약 승인</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td th:text="${list.customerName}"></td>
+                    <td th:text="${list.phone}"></td>
+                    <td th:text="${list.customerId}"></td>
+                    <td th:text="${list.reservationDate}"></td>
+                    <td th:text="${list.reservationTime}"></td>
+                    <td th:switch="${#strings.toString(list.reservationStatus)}">
+                        <span th:case="WAITING">대기</span>
+                        <span th:case="CONFIRM">확정</span>
+                        <span th:case="CANCEL">취소</span>
+                    </td>
+                    <td>
+                        <button type="submit" id="confirm">승인</button>
+                        <button type="submit" id="cancel">취소</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <div>
+        <a th:href="@{/}">홈으로</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>예약 확인</title>
+</head>
+<body>
+    <div>
+        <h3>예약 내역을 확인하였습니다.</h3>
+    </div>
+    <div id="accountInfo">
+        <h4>예약자 정보</h4>
+        <span th:text="${accountInfo.name}">예약자 이름</span>
+        <span th:text="${accountInfo.phone}">예약자 전화번호</span>
+    </div>
+    <div id="reservationInfo">
+        <h4>예약 정보</h4>
+        <p>
+            <span>예약 날짜</span> |
+            <span th:text="${reservation.reservationDate}">예약 날짜</span>
+        </p>
+        <p>
+            <span>예약 시간</span> |
+            <span th:text="${reservation.reservationTime}">예약 시간</span>
+        </p>
+    </div>
+</body>
+</html>

@@ -29,17 +29,18 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) ->
                         auth
                                 .requestMatchers(
-                                        "/account/dashboard",
+                                        "/",
                                         "/account/customer-join",
                                         "/account/manager-join",
-                                        "/account/email-auth").permitAll()
+                                        "/account/email-auth",
+                                        "/reservation/kiosk").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(login ->
                         login
-                                .loginPage("/account/login")        // 커스텀 로그인 페이지 url
+                                .loginPage("/login")        // 커스텀 로그인 페이지 url
                                 .loginProcessingUrl("/loginProc")   // 로그인 처리
-                                .defaultSuccessUrl("/account/dashboard", true)
+                                .defaultSuccessUrl("/", true)
                                 .permitAll())
                 .logout(Customizer.withDefaults())
         ;

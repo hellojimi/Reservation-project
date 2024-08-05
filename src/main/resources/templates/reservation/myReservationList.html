@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>예약 내역</title>
+</head>
+<body>
+    <div class="container">
+        <div th:if="${myReservationList} == null">
+            예약 내역이 존재하지 않습니다.
+        </div>
+        <div th:unless="${myReservationList} == null" th:each="myList : ${myReservationList}">
+            <h3 th:text="${myList.restaurantName}">매장 이름</h3>
+
+            <div class="statusInfo">
+                <div th:switch="${#strings.toString(myList.reservationStatus)}">
+                    <h4 th:case="WAITING">예약 대기</h4>
+                    <h4 th:case="CONFIRM">예약 확정</h4>
+                    <h4 th:case="CANCEL">예약 취소</h4>
+                </div>
+            </div>
+
+            <div>
+                <span th:text="${myList.reservationDate}">예약 날짜</span> |
+                <span th:text="${myList.reservationTime}">예약 시간</span>
+            </div>
+
+            <div th:if="${#strings.equals(myList.reservationStatus, 'CONFIRM')}">
+                <a>다시 예약하기</a> |
+                <a>리뷰 남기기</a>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <a th:href="@{/}">홈으로</a>
+    </div>
+</body>
+</html>

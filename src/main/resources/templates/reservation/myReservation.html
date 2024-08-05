@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>예약 완료</title>
+</head>
+<body>
+    <div>
+        <h3>예약이 완료되었습니다.</h3>
+    </div>
+    <div id="accountInfo">
+        <span th:text="${accountInfo.name}">예약자 이름</span>
+        <span th:text="${accountInfo.phone}">예약자 전화번호</span>
+    </div>
+    <div id="restaurantInfo">
+        <h4>매장 정보</h4>
+        <span th:text="${restaurantInfo.name}">매장명</span> |
+        <span>
+            <a th:href="@{/restaurant/details(id=${restaurantInfo.id})}">매장 상세보기</a>
+        </span>
+    </div>
+    <div>
+        <a th:href="@{/}">홈으로</a>
+    </div>
+</body>
+</html>

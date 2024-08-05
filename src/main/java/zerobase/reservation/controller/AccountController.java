@@ -55,22 +55,4 @@ public class AccountController {
 
         return ResponseEntity.ok("이메일 인증 완료");
     }
-
-    @GetMapping("/login")
-    public String login() {
-        return "account/login";
-    }
-
-    @PostMapping("/logout")
-    public String logout() {
-        return "account/login";
-    }
-
-    @RequestMapping("/dashboard")
-    public String dashboard(@AuthenticationPrincipal User user, Model model) {
-        //AuthenticationPrincipal 유저 정보 가져오기
-        model.addAttribute("user", user);
-
-        return "account/dashboard";
-    }
 }
