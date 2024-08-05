@@ -17,7 +17,15 @@ public enum ErrorCode {
 
     NOT_FOUND_RESTAURANT("등록된 매장이 없습니다."),
 
-    FAILED_REGISTER_WAITING("웨이팅 등록에 실패하였습니다.")
+    FAILED_REGISTER_WAITING("웨이팅 등록에 실패하였습니다."),
+
+    NOT_ALLOW_TODAY_BEFORE_DATE("입력한 날짜가 오늘 이전입니다."),
+    NOT_ALLOW_NOW_BEFORE_TIME("현재 시간보다 이전 시간입니다."),
+
+    FAILED_TO_RESERVE_BY_DUPLICATE("이미 예약된 내역이 존재합니다."),
+    NOE_FOUND_RESERVATION_PERSON_INFO("예약자 정보가 존재하지 않습니다."),
+    NOT_FOUND_RESERVATION_INFO("예약 내역이 존재하지 않습니다."),
+    CANCELED_RESERVATION("취소된 예약 내역입니다.")
     ;
 
     private final String description;

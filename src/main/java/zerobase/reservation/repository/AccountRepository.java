@@ -11,4 +11,6 @@ public interface AccountRepository extends JpaRepository<UserEntity, String> {
 
     Optional<UserEntity> findByEmailAuthKey(String emailAuthKey);
 
+    Optional<UserEntity> findByPhone(String phone);
+
 }

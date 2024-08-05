@@ -17,7 +17,7 @@ public class ReservationEntity {
     private Long id;
 
     private Long restaurantId;                        // 매장 아이디
-    private String accountId;                         // 예약자 아이디
+    private String customerId;                        // 예약자 아이디
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;      // 예약 상태

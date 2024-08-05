@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import zerobase.reservation.config.mail.MailComponents;
 import zerobase.reservation.domain.UserEntity;
 import zerobase.reservation.dto.Auth;
-import zerobase.reservation.exception.UserException;
+import zerobase.reservation.exception.Status;
 import zerobase.reservation.repository.AccountRepository;
 import zerobase.reservation.service.AccountService;
 import zerobase.reservation.type.ErrorCode;
@@ -54,7 +54,7 @@ public class AccountServiceImpl implements AccountService {
         // 이메일 인증을 위해 이메일 발송
         boolean resultSendMail = sendMailToUser(registerUser.getUserId(), uuid);
         if (!resultSendMail) {
-            throw new UserException(ErrorCode.FAILED_SEND_MAIL);
+            throw new Status(ErrorCode.FAILED_SEND_MAIL);
         }
 
         log.info("이메일 발송 완료 -> " + registerUser.getUserId());
@@ -62,10 +62,11 @@ public class AccountServiceImpl implements AccountService {
         return result;
     }
 
+    // 이메일 인증 확인
     @Override
     public UserEntity emailAuth(String uuid) {
         UserEntity userEntity = accountRepository.findByEmailAuthKey(uuid)
-                .orElseThrow(() -> new UserException(ErrorCode.UNKNOWN_AUTH_KEY));
+                .orElseThrow(() -> new Status(ErrorCode.UNKNOWN_AUTH_KEY));
 
         userEntity.setEmailAuthYn(true);
         userEntity.setEmailAuthDt(LocalDateTime.now());
@@ -74,19 +75,22 @@ public class AccountServiceImpl implements AccountService {
         return userEntity;
     }
 
+    // 회원 정보 찾기
     @Override
     public UserEntity getAccountInfo(String accountId) {
         return accountRepository.findById(accountId)
-                .orElseThrow(() -> new UserException(ErrorCode.NOT_FOUND_USER));
+                .orElseThrow(() -> new Status(ErrorCode.NOT_FOUND_USER));
     }
 
+    // 회원 중복 확인
     private void validateDuplicateUser(Auth.join registerUser) {
         boolean exists = accountRepository.existsById(registerUser.getUserId());
         if (exists) {
-            throw new UserException(ErrorCode.DUPLICATE_USER);
+            throw new Status(ErrorCode.DUPLICATE_USER);
         }
     }
 
+    // 이메일 발송 form
     private boolean sendMailToUser(String toEmail, String uuid) {
         String subject = " 가입을 축하드립니다. ";
         String text =

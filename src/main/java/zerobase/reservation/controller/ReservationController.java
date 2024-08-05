@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import zerobase.reservation.domain.ReservationEntity;
 import zerobase.reservation.domain.RestaurantEntity;
 import zerobase.reservation.domain.UserEntity;
+import zerobase.reservation.dto.ReservationList;
 import zerobase.reservation.dto.Reservation;
-import zerobase.reservation.exception.UserException;
+import zerobase.reservation.exception.Status;
 import zerobase.reservation.service.AccountService;
 import zerobase.reservation.service.ReservationService;
 import zerobase.reservation.service.RestaurantService;
 import zerobase.reservation.type.ErrorCode;
+
+import java.util.List;
+
+import static zerobase.reservation.config.security.annotation.ManagerAuthorize;
 
 @Slf4j
 @Controller
@@ -38,7 +43,7 @@ public class ReservationController {
             Model model
     ) {
         if (user.getUsername() == null) {
-            throw new UserException(ErrorCode.REQUIRED_LOGIN);
+            throw new Status(ErrorCode.REQUIRED_LOGIN);
         }
 
         UserEntity accountInfo = accountService.getAccountInfo(user.getUsername());
@@ -57,14 +62,89 @@ public class ReservationController {
             Reservation reservation,
             Model model
     ) {
-        ReservationEntity result
+        ReservationEntity reservationResult
                 = reservationService.registerWaiting(restaurantId, accountId, reservation);
 
+        if (reservationResult == null) {
+            throw new Status(ErrorCode.FAILED_REGISTER_WAITING);
+        }
+
+        UserEntity accountInfo = accountService.getAccountInfo(accountId);
+        RestaurantEntity restaurantInfo = restaurantService.findRestaurant(restaurantId);
+
+        model.addAttribute("accountInfo", accountInfo);
+        model.addAttribute("restaurantInfo", restaurantInfo);
+        model.addAttribute("reservationResult", reservationResult);
+
+        return "reservation/myReservation";
+    }
+
+    // 내 예약 내역 조회
+    @GetMapping("/myReservationList")
+    public String getMyReservationList(
+            @AuthenticationPrincipal User user,
+            Model model
+    ) {
+        List<ReservationList> myReservationList
+                = reservationService.getMyReservationList(user.getUsername());
+
+        model.addAttribute("myReservationList", myReservationList);
+
+        return "reservation/myReservationList";
+    }
+
+    // 관리자 예약 내역 조회
+    @GetMapping("/list")
+    @ManagerAuthorize
+    public String getManagerRestaurantReservationList(
+            @AuthenticationPrincipal User user,
+            Model model
+    ) {
+        Object result
+                = reservationService.getManagerReservationList(user.getUsername());
+
         if (result == null) {
-            throw new UserException(ErrorCode.FAILED_REGISTER_WAITING);
+            throw new Status(ErrorCode.NOT_FOUND_RESERVATION_INFO);
         }
 
         model.addAttribute("result", result);
-        return "/";
+        return "reservation/managerReservationList";
+    }
+
+    // 관리자 예약 승인 여부
+    @PostMapping("/approve")
+    @ManagerAuthorize
+    public String approvalByManager() {
+
+        return "redirect:reservation/managerReservationList";
+    }
+
+    // 현장 예약 확인
+    @GetMapping("/kiosk")
+    public String checkReservation(
+            @RequestParam("id") Long restaurantId,
+            Model model
+    ) {
+        RestaurantEntity restaurantInfo = restaurantService.findRestaurant(restaurantId);
+        model.addAttribute("restaurantInfo", restaurantInfo);
+
+        return "reservation/kiosk";
+    }
+
+    @PostMapping("/kiosk")
+    public String checkReservationSubmit(
+            @RequestParam("restaurantId") Long restaurantId,
+            @RequestParam("phone") String phone,
+            Model model
+    ) {
+        ReservationEntity reservation
+                = reservationService.checkReservationUsingKiosk(restaurantId, phone);
+
+        UserEntity accountInfo = accountService.getAccountInfo(reservation.getCustomerId());
+
+        model.addAttribute("reservation", reservation);
+        model.addAttribute("accountInfo", accountInfo);
+
+        return "reservation/kiosk-result";
     }
 }

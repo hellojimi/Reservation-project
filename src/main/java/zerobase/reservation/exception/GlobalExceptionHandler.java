@@ -9,8 +9,8 @@ import zerobase.reservation.dto.ErrorResponse;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(UserException.class)
-    public ErrorResponse handlerException(UserException e) {
+    @ExceptionHandler(Status.class)
+    public ErrorResponse handlerException(Status e) {
         log.error("{} is occurred.", e.getErrorCode());
 
         return new ErrorResponse(e.getErrorCode(), e.getErrorMessage());

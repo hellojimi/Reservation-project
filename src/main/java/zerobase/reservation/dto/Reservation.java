@@ -15,8 +15,8 @@ public class Reservation {
     ) {
         return ReservationEntity.builder()
                 .restaurantId(restaurantId)
-                .accountId(accountId)
-                .reservationStatus(ReservationStatus.CONFIRM)
+                .customerId(accountId)
+                .reservationStatus(ReservationStatus.WAITING)
                 .reservationDate(reservation.getReservationDate())
                 .reservationTime(reservation.getReservationTime())
                 .build();

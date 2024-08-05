@@ -9,7 +9,7 @@
         <div id="restaurantInfo">
             <h3>매장 정보</h3>
             <p>
-                <input type="text" id="restaurantId" name="restaurantId" th:value="${restaurantInfo.id}" readonly>
+                <input type="hidden" id="restaurantId" name="restaurantId" th:value="${restaurantInfo.id}" readonly>
             </p>
             <p>
                 <label>매장 명</label>
@@ -66,7 +66,7 @@
                 <label>예약 시간</label>
                 <label>
                     <input type="text" id="reservationTime" name="reservationTime"
-                           placeholder="ex) 18, 18:30" required="">
+                           placeholder="ex) 18:00, 18:30" required="">
                 </label>
             </p>
         </div>
@@ -74,7 +74,7 @@
     </form>
 
     <div>
-        <a th:href="@{/account/dashboard}">홈으로</a>
+        <a th:href="@{/}">홈으로</a>
     </div>
 </body>
 </html>
