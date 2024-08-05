@@ -18,6 +18,7 @@ public class ReservationList {
     private String customerName;                     // 예약자 이름
     private String phone;                            // 예약자 전화번호
 
+    private Long reservationId;                     // 예약 아이디
     private ReservationStatus reservationStatus;    // 예약 상태
     private String reservationDate;                 // 예약 일
     private String reservationTime;                 // 예약 시간
@@ -33,6 +34,7 @@ public class ReservationList {
                 .customerId(account.getId())
                 .customerName(account.getName())
                 .phone(account.getPhone())
+                .reservationId(reservation.getId())
                 .reservationStatus(reservation.getReservationStatus())
                 .reservationDate(reservation.getReservationDate())
                 .reservationTime(reservation.getReservationTime())

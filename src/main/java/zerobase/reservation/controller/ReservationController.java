@@ -1,15 +1,13 @@
 package zerobase.reservation.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import zerobase.reservation.domain.ReservationEntity;
 import zerobase.reservation.domain.RestaurantEntity;
 import zerobase.reservation.domain.AccountEntity;
@@ -21,6 +19,7 @@ import zerobase.reservation.service.ReservationService;
 import zerobase.reservation.service.RestaurantService;
 import zerobase.reservation.type.ErrorCode;
 
+import java.net.http.HttpRequest;
 import java.util.List;
 
 import static zerobase.reservation.config.security.annotation.ManagerAuthorize;
@@ -114,9 +113,13 @@ public class ReservationController {
     // 관리자 예약 승인 여부
     @PostMapping("/approve")
     @ManagerAuthorize
-    public String approvalByManager() {
+    public String approvalByManager(HttpServletRequest request) {
+        Long reservationId = Long.valueOf(request.getParameter("reservationId"));
+        String status = request.getParameter("status");
 
-        return "redirect:reservation/managerReservationList";
+        reservationService.getReservationApproveResult(reservationId, status);
+
+        return "redirect:list";
     }
 
     // 현장 예약 확인

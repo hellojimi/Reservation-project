@@ -117,6 +117,18 @@ public class ReservationServiceImpl implements ReservationService {
         return result;
     }
 
+    // 예약 승인 여부
+    public void getReservationApproveResult(Long reservationId, String status) {
+        ReservationEntity reservationEntity = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new Status(ErrorCode.NOT_FOUND_RESERVATION_INFO));
+
+        if ("승인".equals(status)) {
+            reservationRepository.save(Reservation.updateConfirm(reservationEntity));
+        } else if ("취소".equals(status)) {
+            reservationRepository.save(Reservation.updateCancel(reservationEntity));
+        }
+    }
+
     // 입력한 날짜 유효성 확인
     private void validateDateTime(Reservation reservation) {
         // 현재 날짜 및 시간

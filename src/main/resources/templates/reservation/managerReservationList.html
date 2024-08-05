@@ -10,6 +10,8 @@
             예약 내역이 존재하지 않습니다.
         </table>
         <table th:unless="${result} == null" th:each="list : ${result}">
+            <input type="hidden" id="reservationId" name="reservationId" value="${list.reservationId}">
+
             <thead>
                 <tr>
                     <th>예약자 명</th>
@@ -18,7 +20,7 @@
                     <th>예약 일</th>
                     <th>예약 시간</th>
                     <th>예약 상태</th>
-                    <th>예약 승인</th>
+                    <th>승인여부</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,8 +36,8 @@
                         <span th:case="CANCEL">취소</span>
                     </td>
                     <td>
-                        <button type="submit" id="confirm">승인</button>
-                        <button type="submit" id="cancel">취소</button>
+                        <input type="submit" name="status" value="승인">
+                        <input type="submit" name="status" value="취소">
                     </td>
                 </tr>
             </tbody>
